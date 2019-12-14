@@ -77,6 +77,8 @@ class MainWindow(qtw.QWidget):
         )
 
         layout = qtw.QVBoxLayout()
+
+
         self.setLayout(layout)
 
         layout.addWidget(lable)
@@ -88,11 +90,20 @@ class MainWindow(qtw.QWidget):
         subLayout.addWidget(button)
         subLayout.addWidget(combobox)
 
-        gridLayout = qtw.QGridLayout()
-        layout.addLayout(gridLayout)
-        gridLayout.addWidget(spinbox,0,0)
-        gridLayout.addWidget(datetimebox,0,1)
-        gridLayout.addWidget(textedit,1,0,2,2)
+        tab_widget = qtw.QTabWidget()
+        layout.addLayout(tab_widget)
+
+        container = qtw.QWidget(self)
+
+        grid_Layout = qtw.QGridLayout()
+        container.setLayout(grid_Layout)
+        tab_widget.addTab(container,'Tab the First')
+
+        grid_Layout.addWidget(spinbox,0,0)
+        grid_Layout.addWidget(datetimebox,0,1)
+        grid_Layout.addWidget(textedit,1,0,2,2)
+
+
 
         form_layout = qtw.QFormLayout()
         layout.addLayout(form_layout)
@@ -104,7 +115,12 @@ class MainWindow(qtw.QWidget):
         lable.setFixedSize(150, 40)
         line_edit.setMinimumSize(150,15)
         line_edit.setMaximumSize(500,15)
-if __name__== '__main__':
+        spinbox.setSizePolicy(qtw.QSizePolicy.Fixed, qtw.QSizePolicy.Preferred)
+        textedit.setSizePolicy(qtw.QSizePolicy.MinimumExpanding,qtw.QSizePolicy.MinimumExpanding)
+
+        textedit.sizeHint=lambda : qtc.QSize(500,500)
+
+if __name__ == '__main__':
     app = qtw.QApplication(sys.argv)
     mw = MainWindow()
     sys.exit(app.exec())
